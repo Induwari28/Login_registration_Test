@@ -1,6 +1,20 @@
 import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Signup() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => { e.preventDefault(); }
+
+  axios.post('http://localhost:5000/signup', { name, email, password })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+
+
   return (
     <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
       <div className='bg-white p-3 rounded w-25'>
@@ -16,6 +30,8 @@ function Signup() {
               autoComplete='off' 
               name='name' 
               className='form-control rounded-0' 
+              onChange={(e)=>setName(e.target.value) }
+
             />
           </div>
           <div className='mb-3'>
@@ -28,6 +44,7 @@ function Signup() {
               autoComplete='off' 
               name='email' 
               className='form-control rounded-0' 
+              onChange={(e)=>setEmail(e.target.value) }
             />
           </div>
           <div className='mb-3'>
@@ -39,6 +56,7 @@ function Signup() {
               placeholder='Enter Password' 
               name='password' 
               className='form-control rounded-0' 
+              onChange={(e)=>setPassword(e.target.value) }
             />
           </div>
           <button type='submit' className='btn btn-success w-100 rounded-0'>
@@ -46,9 +64,9 @@ function Signup() {
           </button>
         </form>
         <p>Already Have an Account</p>
-        <button className='btn btn-default border w-100 bg-light rounded-0 text-decoration-none'>
+        <Link to="/login" className='btn btn-default border w-100 bg-light rounded-0 text-decoration-none'>
           Login
-        </button>
+        </Link>
       </div>
     </div>
   );
